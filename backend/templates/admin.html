@@ -1,0 +1,130 @@
+<head>
+    <link rel="stylesheet" href="/static/css/base.css">
+    <link rel="stylesheet" href="/static/css/modules/admin.css">
+</head>
+
+<div class="admin-layout">
+    <div class="sidebar">
+        <div class="sidebar-header">
+            <div class="logo">
+                <span>🛠️</span>
+                <h1>AI管理助手</h1>
+            </div>
+            <!-- 添加登出按钮 -->
+            <button id="logout-btn" class="logout-btn">
+                <span class="icon">🚪</span>
+                <span class="text">退出登录</span>
+            </button>
+        </div>
+        <ul class="menu-list">
+            <!-- 工作台菜单项添加禁用样式 -->
+            <li class="menu-item disabled">
+                <span class="icon">🏠</span>
+                <span class="text">工作台</span>
+            </li>
+            
+            <!-- 子菜单项保持原有结构 -->
+            <ul class="submenu">
+                <!-- 每个菜单项必须包含data-type属性 -->
+                <li class="menu-item" data-type="users">
+                    <span class="icon">👥</span>
+                    <span class="text">用户管理</span>
+                </li>
+                <li class="menu-item" data-type="knowledge">
+                    <span class="icon">📚</span>
+                    <span class="text">知识库</span>
+                </li>
+                <li class="menu-item" data-type="settings">
+                    <span class="icon">⚙️</span>
+                    <span class="text">系统设置</span>
+                </li>
+            </ul>
+            
+            <script>
+            document.addEventListener('DOMContentLoaded', () => {
+                // 仅绑定子菜单点击事件
+                document.querySelectorAll('.submenu .menu-item').forEach(item => {
+                    item.addEventListener('click', function() {
+                        const type = this.dataset.type;
+                        // 清除所有激活状态
+                        document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+                        // 设置当前激活项
+                        this.classList.add('active');
+                        loadContent(type);
+                    });
+                });
+            });
+            </script>
+        </ul>
+    </div>
+    <div class="content-container">
+        <div id="dynamic-content">
+            <!-- 默认显示工作台内容 -->
+            <div class="welcome-panel">
+                <h3>欢迎使用AI管理助手</h3>
+                <p>请从左侧菜单选择功能模块</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script>
+    // 修改前
+    function logout() {
+        fetch('/logout', { method: 'GET' })
+    }
+    
+    // 修改后
+    function logout() {
+        fetch('/logout', { 
+            method: 'POST',
+            credentials: 'include'  // 确保携带cookie
+        }).then(() => window.location.href = '/login')
+    }
+    </script>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    // 统一事件绑定（删除重复的绑定代码）
+    document.querySelector('.submenu').addEventListener('click', (e) => {
+        const menuItem = e.target.closest('.menu-item');
+        if (menuItem && menuItem.dataset.type) {
+            // 清除所有激活状态
+            document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
+            // 设置当前激活项
+            menuItem.classList.add('active');
+            // 更新标题
+            document.getElementById('current-module').textContent = menuItem.querySelector('.text').textContent;
+            loadContent(menuItem.dataset.type);
+        }
+    });
+});
+
+// 修复函数闭合问题
+async function loadContent(type) {
+    try {
+        const response = await fetch(`/admin/get-content?type=${encodeURIComponent(type)}`);
+        if (!response.ok) throw new Error('加载失败');
+        document.getElementById('dynamic-content').innerHTML = await response.text();
+    } catch (error) {
+        console.error('加载失败:', error);
+    }
+} // 添加缺失的闭合括号
+</script>
+
+<script>
+// 修改前
+function logout() {
+    fetch('/logout', { method: 'GET' })
+}
+
+// 修改后
+function logout() {
+    fetch('/logout', { 
+        method: 'POST',
+        credentials: 'include'  // 确保携带cookie
+    }).then(() => window.location.href = '/login')
+}
+</script>

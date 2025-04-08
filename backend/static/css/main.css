@@ -1,0 +1,157 @@
+/* 基础布局 */
+.admin-layout, .user-layout {
+    display: flex;
+    height: 100vh;
+}
+
+.sidebar {
+    width: 240px;
+    background: #2c3e50;
+    color: white;
+    padding: 20px;
+}
+
+.content {
+    flex: 1;
+    padding: 30px;
+}
+
+/* 用户表格 */
+.user-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.user-table th {
+    background: #f5f6fa;
+    padding: 12px;
+    text-align: left;
+}
+
+/* 新增登录样式 */
+/* 修改body背景 */
+body {
+    margin: 0;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: 
+        radial-gradient(circle at 10% 20%, rgba(255,255,255,0.8) 15%, transparent 30%),
+        radial-gradient(circle at 90% 80%, rgba(255,255,255,0.6) 10%, transparent 25%),
+        linear-gradient(160deg, #89CFF0 0%, #B0E0E6 50%, #F0FFFF 100%);
+}
+
+/* 原登录框样式保持不变 */
+.login-container {
+    width: 360px;
+    padding: 40px;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.1);
+}
+
+.login-title {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.login-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.login-button {
+    width: 100%;
+    padding: 12px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.login-button:hover {
+    background: #2980b9;
+}
+
+
+/* 项目名称样式 */
+.project-title {
+    text-align: center;
+    color: #2c3e50;
+    font-size: 24px;
+    margin-bottom: 30px;
+}
+
+/* 调整登录容器宽度 */
+.login-container {
+    width: 400px;  /* 从 360px 调整为 400px */
+    padding: 40px 50px;  /* 左右增加内边距 */
+}
+
+/* 增强表单元素间距 */
+.login-form {
+    gap: 25px;  /* 从 20px 调整为 25px */
+}
+
+/* 输入框增加过渡效果 */
+.login-input {
+    transition: border-color 0.3s;
+}
+
+.login-input:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+.error-message {
+    color: #e74c3c;
+    padding: 10px;
+    background: #f8d7da;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+
+/* 统一背景 */
+.admin-layout, .login-container {
+    background: #f5f6fa;
+}
+
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+}
+
+.data-table th {
+    background: #f8f9fa;
+    padding: 12px;
+    text-align: left;
+}
+
+
+/* 强制覆盖样式 */
+.admin-layout {
+    display: flex !important;
+    flex-direction: row !important;
+}
+
+.sidebar {
+    width: 240px !important;
+    flex-shrink: 0 !important;
+}

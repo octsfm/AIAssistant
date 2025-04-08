@@ -1,0 +1,161 @@
+<div class="user-management">
+    <div class="content-header with-action-bar">
+        <div class="header-group">
+            <h2 class="page-title">👥 用户管理</h2>
+            <span class="user-count">（共 100 位用户）</span>
+        </div>
+        <div class="action-bar">        
+            <div class="action-group">
+                <input type="text" placeholder="输入用户名搜索..." class="modern-input">
+                <button class="btn btn-icon search-btn">
+                    <span class="icon-symbol">🔍</span>
+                    <span class="btn-text">搜索</span>
+                </button>
+                <button class="btn btn-primary with-icon" onclick="showAddUserModal()">
+                    <span class="icon-symbol">➕</span>
+                    新建用户
+                </button>
+                <button class="btn btn-icon" title="导出数据">
+                    <span class="icon-symbol">⏬</span>
+                </button>
+            </div>
+        </div>
+    </div>
+    
+    <div class="table-container">
+        <!-- 优化表格结构 -->
+        <table class="data-table">
+            <thead>
+                <tr>
+                    <th>用户名</th>
+                    <th>用户角色</th>
+                    <th>注册时间</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- 示例数据行（实际应从数据库获取） -->
+                <tr>
+                    <td>
+                        <div class="user-info">
+                            <div class="user-avatar">A</div>
+                            <div class="user-detail">
+                                <div class="username">admin</div>
+                                <div class="email">admin@example.com</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="status-badge role-admin">管理员</span>
+                    </td>
+                    <td>
+                        2024-02-20 14:30:45
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-icon" title="编辑">
+                                <span class="icon-symbol">✏️</span>
+                            </button>
+                            <button class="btn btn-icon" title="删除">
+                                <span class="icon-symbol">🗑️</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="user-info">
+                            <div class="user-avatar">A</div>
+                            <div class="user-detail">
+                                <div class="username">admin</div>
+                                <div class="email">admin@example.com</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="status-badge role-admin">管理员</span>
+                    </td>
+                    <td>
+                        2024-02-20 14:30:45
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-icon" title="编辑">
+                                <span class="icon-symbol">✏️</span>
+                            </button>
+                            <button class="btn btn-icon" title="删除">
+                                <span class="icon-symbol">🗑️</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="user-info">
+                            <div class="user-avatar">A</div>
+                            <div class="user-detail">
+                                <div class="username">admin</div>
+                                <div class="email">admin@example.com</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="status-badge role-admin">管理员</span>
+                    </td>
+                    <td>
+                        2024-02-20 14:30:45
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-icon" title="编辑">
+                                <span class="icon-symbol">✏️</span>
+                            </button>
+                            <button class="btn btn-icon" title="删除">
+                                <span class="icon-symbol">🗑️</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <div class="user-info">
+                            <div class="user-avatar">A</div>
+                            <div class="user-detail">
+                                <div class="username">admin</div>
+                                <div class="email">admin@example.com</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span class="status-badge role-admin">管理员</span>
+                    </td>
+                    <td>
+                        2024-02-20 14:30:45
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="btn btn-icon" title="编辑">
+                                <span class="icon-symbol">✏️</span>
+                            </button>
+                            <button class="btn btn-icon" title="删除">
+                                <span class="icon-symbol">🗑️</span>
+                            </button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- 分页控件 -->
+        <div class="pagination-controls">
+            <span class="pagination-info">当前第1页，共10页（100条记录）</span>
+            <div class="pagination-buttons">
+                <button class="btn" disabled>首页</button>
+                <button class="btn" disabled>上一页</button>
+                <span class="page-number">1</span>
+                <button class="btn">下一页</button>
+                <button class="btn">末页</button>
+            </div>
+        </div>
+    </div>
+</div>

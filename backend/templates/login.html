@@ -1,0 +1,22 @@
+<head>
+    <!-- 确保路径包含完整的static目录 -->
+    <link rel="stylesheet" href="/static/css/base.css">
+    <link rel="stylesheet" href="/static/css/modules/login.css">
+</head>
+
+<div class="login-container">
+    <!-- 修正标题位置 -->
+    <h1 class="login-title">AI 管理助手</h1>
+    
+    <!-- 移动错误提示到正确位置 -->
+    {% if error %}
+    <div class="error-message">{{ error }}</div>
+    {% endif %}
+    
+    <!-- 保持原有表单结构 -->
+    <form method="post" action="/login" class="login-form">
+        <input type="text" name="username" placeholder="用户名" class="login-input" required>
+        <input type="password" name="password" placeholder="密码" class="login-input" required>
+        <button type="submit" class="login-button">登录</button>
+    </form>
+</div>

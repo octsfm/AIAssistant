@@ -1,0 +1,50 @@
+<div class="content-block">
+    <div class="content-header">
+        <h2>系统设置</h2>
+        <div class="action-bar">
+            <button class="btn-primary" onclick="saveSystemSettings()">
+                <span class="icon">💾</span> 保存设置
+            </button>
+        </div>
+    </div>
+
+    <form id="system-settings" class="settings-form">
+        <div class="form-group">
+            <label>系统名称</label>
+            <input type="text" name="system_name" value="AI管理助手" required>
+        </div>
+        
+        <div class="form-group">
+            <label>系统Logo</label>
+            <div class="logo-upload">
+                <img src="/static/images/logo.png" alt="当前Logo">
+                <input type="file" accept="image/*" onchange="previewLogo(this)">
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label>会话超时时间</label>
+            <select name="session_timeout">
+                <option value="30">30 分钟</option>
+                <option value="60">60 分钟</option>
+                <option value="120">120 分钟</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>数据备份</label>
+            <div class="backup-controls">
+                <button type="button" class="btn-secondary" onclick="createBackup()">
+                    立即备份
+                </button>
+                <input type="file" id="restore-input" hidden 
+                       accept=".bak" 
+                       onchange="restoreBackup(this.files)">
+                <button type="button" class="btn-secondary" 
+                        onclick="document.getElementById('restore-input').click()">
+                    恢复备份
+                </button>
+            </div>
+        </div>
+    </form>
+</div>

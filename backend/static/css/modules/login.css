@@ -1,0 +1,67 @@
+/* 登录页样式 */
+.login-container {
+    display: flex;
+    flex-direction: column;
+    width: 400px;
+    padding: 40px 50px;
+    margin: auto; 
+    background: rgba(255,255,255,0.9);
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+    backdrop-filter: blur(5px);
+    z-index: 2;
+}
+
+.login-title {
+    text-align: center;
+    margin-bottom: 30px;
+    color: #2c3e50;
+}
+
+.login-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.login-input {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+.login-button {
+    width: 100%;
+    padding: 12px;
+    background: #3498db;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: background 0.3s;
+}
+
+.login-button:hover {
+    background: #2980b9;
+}
+
+/* 输入框增加过渡效果 */
+.login-input {
+    transition: border-color 0.3s;
+}
+
+.login-input:focus {
+    border-color: #3498db;
+    outline: none;
+}
+
+.error-message {
+    color: #e74c3c;
+    padding: 10px;
+    background: #f8d7da;
+    border-radius: 4px;
+    margin-bottom: 20px;
+    text-align: center;
+}

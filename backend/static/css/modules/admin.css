@@ -1,0 +1,231 @@
+/* 管理页样式 */
+.admin-layout {
+    display: flex;
+    height: 100vh;
+    background: rgba(255,255,255,0.05);
+    overflow: hidden; /* 防止横向滚动条 */
+}
+
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 240px;
+    background: rgba(44, 62, 80, 0.98);
+    backdrop-filter: blur(8px);
+    padding: 20px 0;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.1);
+}
+
+.sidebar-header {
+    padding: 0 20px 20px;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: #fff;
+}
+
+.logo h1 {
+    font-size: 18px;
+    margin: 0;
+}
+
+.menu-list {
+    padding: 15px 0;
+}
+
+.menu-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    padding: 14px 25px;
+    color: rgba(255,255,255,0.8);
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.menu-item:hover {
+    background: rgba(255,255,255,0.1);
+    color: white;
+}
+
+
+
+/* 移除通用li的hover影响 */
+.sidebar li.active:hover {
+    background: inherit !important;
+    border-left-color: inherit !important;
+}
+
+
+
+/* 移除通用li对.active的影响 */
+.sidebar li.active:hover {
+    background: transparent !important;
+    border-left-color: transparent !important;
+}
+
+.icon {
+    font-size: 18px;
+}
+
+.text {
+    font-size: 14px;
+    font-weight: 500;
+}
+
+.content-container {
+    position: fixed;
+    left: 240px;        /* 与侧边栏宽度一致 */
+    right: 0;           /* 占满右侧空间 */
+    top: 0;
+    bottom: 0;
+    background: rgba(255,255,255,0.95);
+    border-radius: 12px 0 0 0; /* 仅左上角保留圆角 */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+    box-sizing: border-box;
+    overflow: auto;
+    padding: 30px;
+    margin: 0;          /* 移除所有margin */
+    width: auto;        /* 自动宽度 */
+}
+
+/* 侧边栏菜单优化 */
+.sidebar ul {
+    list-style: none;
+    padding: 0;
+    margin: 20px 0;
+}
+
+.sidebar li {
+    padding: 12px 25px;
+    margin: 8px 0;
+    cursor: pointer;
+    transition: all 0.3s;
+    border-left: 4px solid transparent;
+}
+
+.sidebar li:hover {
+    background: rgba(255,255,255,0.1);
+    border-left-color: #3498db;
+}
+
+/* 内容区标题样式 */
+.content-header {
+    margin-bottom: 30px;
+    padding-bottom: 15px;
+    border-bottom: 1px solid #eee;
+}
+
+.submenu {
+    margin-left: 30px;
+    border-left: 1px solid rgba(255,255,255,0.1);
+    padding-left: 15px;
+}
+
+/* 恢复用户管理菜单项样式 */
+.submenu .menu-item {
+    /* 保持原有submenu样式 */
+    padding: 12px 20px;
+    margin: 6px 0;
+    border-radius: 6px;
+    background: transparent;
+    transition: all 0.2s;
+    cursor: pointer; /* 恢复指针样式 */
+    pointer-events: auto; /* 启用交互 */
+}
+
+.submenu .icon {
+    font-size: 16px;
+    margin-right: 8px;
+}
+
+
+/* 加载动画 */
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+.loading-indicator {
+    display: flex;
+    justify-content: center;
+    padding: 30px;
+}
+
+.loading-spinner {
+    width: 40px;
+    height: 40px;
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.logout-btn {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    padding: 12px 25px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 25px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s;
+    box-shadow: 0 4px 15px rgba(231, 76, 60, 0.3);
+    font-size: 14px;
+    z-index: 100;
+}
+
+.logout-btn:hover {
+    background: #c0392b;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(231, 76, 60, 0.4);
+}
+
+.logout-btn .icon {
+    font-size: 16px;
+    transition: transform 0.3s;
+}
+
+.logout-btn:hover .icon {
+    transform: translateX(3px);
+}
+
+
+/* 禁用工作台菜单项 */
+.menu-item.disabled {
+    cursor: default !important;
+    pointer-events: none !important;
+    opacity: 0.7;
+    background: rgba(255,255,255,0.05) !important;
+}
+
+/* 禁用状态变化 */
+.menu-item.disabled,
+.menu-item.disabled:hover {
+    background: rgba(255,255,255,0.05) !important;
+    border-left-color: transparent !important;
+    transform: none !important;
+    box-shadow: none !important;
+}
+
+
+.welcome-panel {
+    text-align: center;
+    padding: 100px 20px;
+    color: #666;
+}
+
+.welcome-panel h3 {
+    font-size: 24px;
+    margin-bottom: 15px;
+}

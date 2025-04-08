@@ -1,0 +1,10 @@
+{% for user in users %}
+<tr>
+    <td>{{ user.username }}</td>
+    <td>{{ user.role }}</td>
+    <td>
+        <button class="btn edit-btn">编辑</button>
+        <button class="btn delete-btn">删除</button>
+    </td>
+</tr>
+{% endfor %}

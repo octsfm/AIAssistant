@@ -1,0 +1,33 @@
+<div class="content-block">
+    <div class="content-header">
+        <h2>知识库管理</h2>
+        <div class="action-bar">
+            <div class="upload-area" onclick="document.getElementById('file-input').click()">
+                <span class="icon">📤</span>
+                <p>拖放文件到此区域或点击上传</p>
+                <input type="file" id="file-input" hidden multiple 
+                       accept=".pdf,.docx,.txt,.md" 
+                       onchange="handleFileUpload(this.files)">
+            </div>
+        </div>
+    </div>
+
+    <div class="document-list">
+        <div class="list-header">
+            <span>文档名称</span>
+            <span>类型</span>
+            <span>大小</span>
+            <span>上传时间</span>
+        </div>
+        <div class="list-item">
+            <span>用户手册.pdf</span>
+            <span>PDF</span>
+            <span>2.5 MB</span>
+            <span>2024-03-01</span>
+            <div class="item-actions">
+                <button class="btn-link">预览</button>
+                <button class="btn-link danger">删除</button>
+            </div>
+        </div>
+    </div>
+</div>
