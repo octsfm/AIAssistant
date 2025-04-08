@@ -27,7 +27,10 @@ async def admin_dashboard(request: Request):
 # 修改其他路由定义（保持相对路径）
 @router.get("/users", include_in_schema=False)  # 完整路径会是 /admin/users
 async def user_management(request: Request, db: Session = Depends(get_db)):
-    users = db.query(User).all()
+    # 使用SQLAlchemy的正确查询方式
+    print(f"Debug - user_management") 
+    users = db.query(User).order_by(User.created_at.desc()).all()
+    print(f"Debug - Fetched users: {len(users)}")  # 添加调试日志
     return templates.TemplateResponse("user_mgmt.html", {
         "request": request,
         "users": users
@@ -42,13 +45,16 @@ async def knowledge_management(request: Request):
 
 # 添加缺失的路由处理
 @router.get("/get-content")
-async def get_content(request: Request, type: str):
+async def get_content(request: Request, type: str, db: Session = Depends(get_db)):
     template_map = {
-        "users": "user_mgmt.html",
-        "knowledge": "knowledge_upload.html",
-        "settings": "system_settings.html"
+        "users": ("user_mgmt.html", {"users": db.query(User).all()}),
+        "knowledge": ("knowledge_upload.html", {}),
+        "settings": ("system_settings.html", {})
     }
-    return templates.TemplateResponse(template_map[type], {"request": request})
+    print(f"Debug - get_content") 
+    template, context = template_map[type]
+    context["request"] = request
+    return templates.TemplateResponse(template, context)
 
 
 from fastapi import APIRouter, Depends, HTTPException
@@ -60,6 +66,7 @@ async def create_user(
     role: str = "user",
     db: Session = Depends(get_db)
 ):
+    print(f"Debug - create_user") 
     # 检查用户是否存在
     existing_user = db.query(User).filter(User.username == username).first()
     if existing_user:
@@ -68,7 +75,7 @@ async def create_user(
     # 创建新用户
     new_user = User(
         username=username,
-        hashed_password=get_password_hash(password),
+        password=get_password_hash(password),
         role=role
     )
     

@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, MetaData, text, inspect  # 添加 inspect 导入
+from sqlalchemy import create_engine, MetaData, text, inspect, Column, String, DateTime, Integer  # 添加 Integer
 from sqlalchemy.orm import sessionmaker
 from bcrypt import hashpw, gensalt
 import os
@@ -35,10 +35,13 @@ metadata.reflect(engine)
 def init_db():
     inspector = inspect(engine)
     if 'users' not in inspector.get_table_names():
+        # 确保表定义中使用的类型都已导入
         Table('users', metadata,
-            Column('username', String(50), primary_key=True),
+            Column('id', Integer, primary_key=True),  # 现在可以正确识别 Integer
+            Column('username', String(50), unique=True),
             Column('password', String(100)),
-            Column('role', String(20))
+            Column('role', String(20)),
+            Column('created_at', DateTime)
         )
         metadata.create_all(engine)
     
@@ -66,9 +69,10 @@ def init_db():
             ).scalar():
                 hashed_pw = hashpw(user_data["password"].encode(), gensalt()).decode()
                 session.execute(
+                    # 修改初始化用户的插入语句（第72行附近）
                     text("""
-                        INSERT INTO users (username, password, role)
-                        VALUES (:username, :password, :role)
+                        INSERT INTO users (username, password, role, created_at)
+                        VALUES (:username, :password, :role, CURRENT_TIMESTAMP)
                     """),
                     {
                         "username": user_data["username"],

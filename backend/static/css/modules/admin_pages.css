@@ -14,18 +14,23 @@
 }
 
 /* 优化表格样式 */
+/* 修复表格布局 */
 .data-table {
-    border-collapse: collapse;
-    width: 100%;
-    margin: 20px 0;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    table-layout: fixed;  /* 保持固定布局 */
 }
 
 .data-table th,
 .data-table td {
     padding: 12px 15px;
-    border-bottom: 1px solid #e0e0e0;
-    text-align: left;
+    white-space: nowrap;    /* 防止文本换行 */
+    overflow: hidden;
+    text-overflow: ellipsis;/* 长文本显示省略号 */
+}
+
+/* 操作按钮居中 */
+.action-buttons {
+    justify-content: center;
+    gap: 8px;
 }
 
 .data-table th {
@@ -191,28 +196,11 @@
     box-shadow: 0 0 0 3px rgba(52,152,219,0.1);
 }
 
-.data-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-}
 
-.data-table th {
-    background: #f8f9fa;
-    color: #6c757d;
-    padding: 1rem;
-    border-bottom: 2px solid #e9ecef;
-}
 
-.data-table td {
-    padding: 1rem;
-    border-bottom: 1px solid #e9ecef;
-    vertical-align: middle;
-}
 
-.data-table tr:hover td {
-    background: #f8f9fa;
-}
+
+
 
 .status-badge {
     display: inline-block;
@@ -345,4 +333,18 @@
     border: 1px solid #e0e0e0;
     border-radius: 6px;
     background: white;
+}
+
+
+/* 用户名、角色、注册时间列居中 */
+.data-table td:nth-child(1),
+.data-table td:nth-child(2),
+.data-table td:nth-child(3) {
+    text-align: center;
+    vertical-align: middle;
+}
+
+/* 操作列保持右对齐 */
+.data-table td:nth-child(4) {
+    text-align: right;
 }
