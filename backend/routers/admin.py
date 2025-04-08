@@ -27,7 +27,7 @@ async def admin_dashboard(request: Request):
 # 修改其他路由定义（保持相对路径）
 @router.get("/users", include_in_schema=False)  # 完整路径会是 /admin/users
 async def user_management(request: Request, db: Session = Depends(get_db)):
-    users = db.query(User).all()
+    users = db.query(User).all()  # 直接查询完整模型对象
     return templates.TemplateResponse("user_mgmt.html", {
         "request": request,
         "users": users

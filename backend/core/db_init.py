@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine, MetaData, text, inspect  # 添加 inspect 导入
+from sqlalchemy import create_engine, MetaData, text, inspect, Column, String, DateTime  # 添加 DateTime
 from sqlalchemy.orm import sessionmaker
 from bcrypt import hashpw, gensalt
 import os
@@ -38,7 +38,8 @@ def init_db():
         Table('users', metadata,
             Column('username', String(50), primary_key=True),
             Column('password', String(100)),
-            Column('role', String(20))
+            Column('role', String(20)),
+            Column('created_at', DateTime)  # 现在可以正确识别 DateTime
         )
         metadata.create_all(engine)
     

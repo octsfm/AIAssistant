@@ -33,117 +33,39 @@
                     <th>操作</th>
                 </tr>
             </thead>
-            <tbody>
-                <!-- 示例数据行（实际应从数据库获取） -->
-                <tr>
-                    <td>
-                        <div class="user-info">
-                            <div class="user-avatar">A</div>
-                            <div class="user-detail">
-                                <div class="username">admin</div>
-                                <div class="email">admin@example.com</div>
+                <!-- 修改后（动态数据） -->
+                <tbody>
+                    {% for user in users %}
+                    <tr>
+                        <td>
+                            <div class="user-info">
+                                <div class="user-avatar">{{ user.username[0] | upper }}</div>
+                                <div class="user-detail">
+                                    <div class="username">{{ user.username }}</div>
+                                    <!-- 删除以下这行 -->
+                                    <!-- <div class="email">{{ user.email or '未设置邮箱' }}</div> -->
+                                </div>
                             </div>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="status-badge role-admin">管理员</span>
-                    </td>
-                    <td>
-                        2024-02-20 14:30:45
-                    </td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="btn btn-icon" title="编辑">
-                                <span class="icon-symbol">✏️</span>
-                            </button>
-                            <button class="btn btn-icon" title="删除">
-                                <span class="icon-symbol">🗑️</span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="user-info">
-                            <div class="user-avatar">A</div>
-                            <div class="user-detail">
-                                <div class="username">admin</div>
-                                <div class="email">admin@example.com</div>
+                        </td>
+                        <td>
+                            <span class="status-badge role-{{ user.role }}">
+                                {{ '管理员' if user.role == 'admin' else '普通用户' }}
+                            </span>
+                        </td>
+                        <td>{{ user.created_at.strftime('%Y-%m-%d %H:%M:%S') }}</td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="btn btn-icon" title="编辑">
+                                    <span class="icon-symbol">✏️</span>
+                                </button>
+                                <button class="btn btn-icon" title="删除">
+                                    <span class="icon-symbol">🗑️</span>
+                                </button>
                             </div>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="status-badge role-admin">管理员</span>
-                    </td>
-                    <td>
-                        2024-02-20 14:30:45
-                    </td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="btn btn-icon" title="编辑">
-                                <span class="icon-symbol">✏️</span>
-                            </button>
-                            <button class="btn btn-icon" title="删除">
-                                <span class="icon-symbol">🗑️</span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="user-info">
-                            <div class="user-avatar">A</div>
-                            <div class="user-detail">
-                                <div class="username">admin</div>
-                                <div class="email">admin@example.com</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="status-badge role-admin">管理员</span>
-                    </td>
-                    <td>
-                        2024-02-20 14:30:45
-                    </td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="btn btn-icon" title="编辑">
-                                <span class="icon-symbol">✏️</span>
-                            </button>
-                            <button class="btn btn-icon" title="删除">
-                                <span class="icon-symbol">🗑️</span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td>
-                        <div class="user-info">
-                            <div class="user-avatar">A</div>
-                            <div class="user-detail">
-                                <div class="username">admin</div>
-                                <div class="email">admin@example.com</div>
-                            </div>
-                        </div>
-                    </td>
-                    <td>
-                        <span class="status-badge role-admin">管理员</span>
-                    </td>
-                    <td>
-                        2024-02-20 14:30:45
-                    </td>
-                    <td>
-                        <div class="action-buttons">
-                            <button class="btn btn-icon" title="编辑">
-                                <span class="icon-symbol">✏️</span>
-                            </button>
-                            <button class="btn btn-icon" title="删除">
-                                <span class="icon-symbol">🗑️</span>
-                            </button>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
         </table>
 
         <!-- 分页控件 -->

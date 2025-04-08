@@ -19,6 +19,8 @@
     width: 100%;
     margin: 20px 0;
     box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    table-layout: fixed;  /* 新增 */
+    width: 100%;         /* 新增 */
 }
 
 .data-table th,
@@ -26,6 +28,9 @@
     padding: 12px 15px;
     border-bottom: 1px solid #e0e0e0;
     text-align: left;
+    width: 25%;          /* 新增 */
+    overflow: hidden;    /* 新增 */
+    text-overflow: ellipsis; /* 新增 */
 }
 
 .data-table th {
@@ -191,28 +196,11 @@
     box-shadow: 0 0 0 3px rgba(52,152,219,0.1);
 }
 
-.data-table {
-    width: 100%;
-    border-collapse: separate;
-    border-spacing: 0;
-}
 
-.data-table th {
-    background: #f8f9fa;
-    color: #6c757d;
-    padding: 1rem;
-    border-bottom: 2px solid #e9ecef;
-}
 
-.data-table td {
-    padding: 1rem;
-    border-bottom: 1px solid #e9ecef;
-    vertical-align: middle;
-}
 
-.data-table tr:hover td {
-    background: #f8f9fa;
-}
+
+
 
 .status-badge {
     display: inline-block;
