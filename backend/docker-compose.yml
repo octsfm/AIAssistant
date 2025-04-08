@@ -1,9 +1,9 @@
 services:
-  mgnt-db:
-    image: postgres:13
+  mgmt-db:
+    image: postgres:15
     environment:
       POSTGRES_DB: mgnt-db
-      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_PASSWORD: admin123
     ports:
       - "5432:5432"
     healthcheck:
@@ -11,13 +11,3 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
-
-  ai-backend:
-    build: .
-    ports:
-      - "8000:8000"
-    depends_on:
-      mgnt-db:
-        condition: service_healthy
-    environment:
-      DATABASE_URL: "postgresql://postgres:mysecretpassword@mgnt-db:5432/mgnt-db"

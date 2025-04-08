@@ -5,17 +5,27 @@ from sqlalchemy.orm import Session
 from core.database import get_db  # 修改导入路径
 from auth.models import User
 from auth.security import get_password_hash
+from fastapi import APIRouter, Request
+from fastapi.responses import HTMLResponse
+# 删除重复的导入（第10行）
+from starlette.templating import Jinja2Templates  # 保留此处
+# 删除下面这行重复的导入 ↓
+# from starlette.templating import Jinja2Templates
 
-router = APIRouter()
+# 初始化模板引擎（添加这部分）
 templates = Jinja2Templates(directory="templates")
+
+# 在文件顶部添加路由前缀声明
+router = APIRouter(prefix="/admin", tags=["admin"])
 
 @router.get("", include_in_schema=False)
 async def admin_dashboard(request: Request):
-    if not request.session.get("authenticated") or request.cookies.get("user_role") != "admin":
+    if not request.session.get("authenticated"):
         return RedirectResponse(url="/login")
     return templates.TemplateResponse("admin.html", {"request": request})
 
-@router.get("/users", include_in_schema=False)
+# 修改其他路由定义（保持相对路径）
+@router.get("/users", include_in_schema=False)  # 完整路径会是 /admin/users
 async def user_management(request: Request, db: Session = Depends(get_db)):
     users = db.query(User).all()
     return templates.TemplateResponse("user_mgmt.html", {
@@ -30,6 +40,7 @@ async def knowledge_management(request: Request):
         return RedirectResponse(url="/login")
     return templates.TemplateResponse("knowledge_upload.html", {"request": request})
 
+# 添加缺失的路由处理
 @router.get("/get-content")
 async def get_content(request: Request, type: str):
     template_map = {
