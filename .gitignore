@@ -1,0 +1,3 @@
+# 在.gitignore中添加
+__pycache__/
+*.py[cod]
