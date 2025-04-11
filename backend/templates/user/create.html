@@ -21,6 +21,12 @@
         
         <div class="form-group">
             <label>用户角色：</label>
+            <!-- 在表单上方添加错误提示 -->
+            {% if error %}
+            <div class="error-message">{{ error }}</div>
+            {% endif %}
+            
+            <!-- 修改角色选择部分 -->
             <select name="role" class="modern-select">
                 <option value="user">普通用户</option>
                 <option value="admin">管理员</option>
@@ -28,7 +34,9 @@
         </div>
         
         <div class="form-actions">
-            <button type="button" class="btn" onclick="window.history.back()">取消</button>
+            <!-- 修改取消按钮 -->
+            <button type="button" class="btn" onclick="window.location.href='/admin/users'">取消</button>
+            
             <button type="submit" class="btn btn-primary">创建用户</button>
         </div>
     </form>

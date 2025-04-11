@@ -43,7 +43,12 @@ async def login_action(
             
         # 登录成功后设置session并跳转
         request.session["authenticated"] = True
+        # 现有代码已设置角色信息
         request.session["user_role"] = user['role']
+        # 登录成功后设置session并跳转
+        request.session["authenticated"] = True
+        request.session["user_role"] = user['role']
+        request.session["user_id"] = user['id']  # 新增用户ID存储
         return RedirectResponse(url="/admin", status_code=status.HTTP_302_FOUND)
 
     except Exception as e:

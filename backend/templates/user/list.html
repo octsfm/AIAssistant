@@ -92,3 +92,54 @@
     </div>
 </div>
 
+<!-- 在文件底部添加模态框 -->
+<div class="modal" id="addUserModal">
+    <div class="modal-content">
+        <div class="modal-header">
+            <h3>创建新用户</h3>
+            <span class="close-btn" onclick="hideAddUserModal()">&times;</span>
+        </div>
+        <form method="post" action="/user/create" class="user-form">
+            <input type="hidden" name="csrf_token" value="{{ request.session.get('csrf_token', '') }}">
+            <div class="form-group">
+                <label>用户名：</label>
+                <input type="text" name="username" required class="modern-input">
+            </div>
+            <div class="form-group">
+                <label>密码：</label>
+                <input type="password" name="password" required class="modern-input">
+            </div>
+            <div class="form-group">
+                <label>用户角色：</label>
+                <select name="role" class="modern-select">
+                    <option value="user">普通用户</option>
+                    <option value="admin">管理员</option>
+                </select>
+            </div>
+            <div class="form-actions">
+                <button type="button" class="btn" onclick="hideAddUserModal()">取消</button>
+                <button type="submit" class="btn btn-primary">创建</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<script>
+// 显示模态框
+function showAddUserModal() {
+    document.getElementById('addUserModal').style.display = 'flex';
+}
+
+// 隐藏模态框
+function hideAddUserModal() {
+    document.getElementById('addUserModal').style.display = 'none';
+}
+
+// 点击模态框外部关闭
+window.onclick = function(event) {
+    const modal = document.getElementById('addUserModal');
+    if (event.target == modal) {
+        hideAddUserModal();
+    }
+}
+</script>

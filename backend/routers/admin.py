@@ -20,34 +20,45 @@ router = APIRouter(prefix="/admin", tags=["admin"])
 
 @router.get("", include_in_schema=False)
 async def admin_dashboard(request: Request):
-    if not request.session.get("authenticated"):
+    # 添加完整的三项验证（存在性检查 + 角色验证）
+    if not all([
+        request.session.get("authenticated"),
+        request.session.get("user_role") == "admin",
+        request.session.get("user_id")  # 新增用户ID验证
+    ]):
         return RedirectResponse(url="/login")
     return templates.TemplateResponse("admin.html", {"request": request})
 
-# 修改其他路由定义（保持相对路径）
-@router.get("/users", include_in_schema=False)  # 完整路径会是 /admin/users
+# 正确做法是在每个路由函数内部添加检查
+@router.get("/users", include_in_schema=False)
 async def user_management(request: Request, db: Session = Depends(get_db)):
-    # 使用SQLAlchemy的正确查询方式
-    print(f"Debug - user_management") 
+    # 权限检查必须写在函数内部
+    if not request.session.get("authenticated") or request.session.get("user_role") != "admin":
+        return RedirectResponse(url="/login")
+    
     users = db.query(User).order_by(User.created_at.desc()).all()
-    print(f"Debug - Fetched users: {len(users)}")  # 添加调试日志
-    return templates.TemplateResponse("user_mgmt.html", {
+    return templates.TemplateResponse("user/list.html", {
         "request": request,
         "users": users
     })
 
-# 添加知识库管理路由
+# 示例修改知识库管理路由
 @router.get("/knowledge", include_in_schema=False)
 async def knowledge_management(request: Request):
-    if not request.session.get("authenticated"):
+    # 添加权限检查
+    if not request.session.get("authenticated") or request.session.get("user_role") != "admin":
         return RedirectResponse(url="/login")
     return templates.TemplateResponse("knowledge_upload.html", {"request": request})
 
-# 添加缺失的路由处理
 @router.get("/get-content")
 async def get_content(request: Request, type: str, db: Session = Depends(get_db)):
+    # 添加权限检查
+    if not request.session.get("authenticated") or request.session.get("user_role") != "admin":
+        return RedirectResponse(url="/login")
+    
+    # 在get_content函数中修改模板路径
     template_map = {
-        "users": ("user_mgmt.html", {"users": db.query(User).all()}),
+        "users": ("user/list.html", {"users": db.query(User).all()}),  # 修改路径
         "knowledge": ("knowledge_upload.html", {}),
         "settings": ("system_settings.html", {})
     }
@@ -58,41 +69,3 @@ async def get_content(request: Request, type: str, db: Session = Depends(get_db)
 
 
 from fastapi import APIRouter, Depends, HTTPException
-
-@router.post("/api/users")
-async def create_user(
-    username: str,
-    password: str,
-    role: str = "user",
-    db: Session = Depends(get_db)
-):
-    print(f"Debug - create_user") 
-    # 检查用户是否存在
-    existing_user = db.query(User).filter(User.username == username).first()
-    if existing_user:
-        raise HTTPException(status_code=400, detail="用户名已存在")
-    
-    # 创建新用户
-    new_user = User(
-        username=username,
-        password=get_password_hash(password),
-        role=role
-    )
-    
-    db.add(new_user)
-    db.commit()
-    db.refresh(new_user)
-    
-    return {"message": "用户创建成功", "user_id": new_user.id}
-
-
-@router.get("/users/create")
-async def user_create(request: Request):
-    return templates.TemplateResponse("user_create.html", {"request": request})
-
-@router.post("/users/create")
-async def create_user(request: Request):
-    # 添加实际的用户创建逻辑
-    form_data = await request.form()
-    # ...处理表单数据...
-    return RedirectResponse("/users", status_code=303)

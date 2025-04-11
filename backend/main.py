@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from starlette.middleware.sessions import SessionMiddleware
-from routers import auth, admin  # 新增admin导入
+from routers import auth, admin, user  # 新增user导入
 from core.db_init import init_db  # 添加缺失的导入
 from fastapi.staticfiles import StaticFiles
 
@@ -28,3 +28,5 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 @app.on_event("startup")
 async def startup_event():
     init_db()  # 现在可以正确调用初始化函数
+from routers import user  # 确保有这行导入
+app.include_router(user.router)  # 确保有这行注册

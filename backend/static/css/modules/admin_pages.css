@@ -353,3 +353,11 @@
 .data-table td:nth-child(4) {
     text-align: right;
 }
+
+.error-message {
+    color: #e74c3c;
+    padding: 10px;
+    background: #f8d7da;
+    border-radius: 4px;
+    margin-bottom: 20px;
+}
