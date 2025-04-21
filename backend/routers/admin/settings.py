@@ -8,7 +8,7 @@ from starlette.templating import Jinja2Templates
 router = APIRouter(prefix="", tags=["admin_settings"])
 templates = Jinja2Templates(directory="templates")
 
-@router.get("/")
+@router.get("/settings")
 async def system_settings(request: Request, db: Session = Depends(get_db)):
     # 移除数据库查询，使用硬编码示例数据
     settings = {

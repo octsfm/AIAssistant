@@ -8,7 +8,7 @@ router = APIRouter()
 # 确保模板引擎在路由函数之前初始化
 templates = Jinja2Templates(directory="templates")
 
-@router.get("/", include_in_schema=False)
+@router.get("/users", include_in_schema=False)
 async def user_list(request: Request, db: Session = Depends(get_db)):
     print(f"[users.py][12]user_list") 
     if not request.session.get("authenticated") or request.session.get("user_role") != "admin":
@@ -19,4 +19,10 @@ async def user_list(request: Request, db: Session = Depends(get_db)):
     return templates.TemplateResponse("user/list.html", {  # 现在可以正确引用模板引擎
         "request": request,
         "users": users
+    })
+    
+@router.get("/users/create")  # 完整路径：/admin/users/create
+async def create_user_page(request: Request):
+    return templates.TemplateResponse("user/create.html", {
+        "request": request
     })

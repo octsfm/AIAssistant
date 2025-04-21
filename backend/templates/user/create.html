@@ -1,13 +1,12 @@
 {% extends "base.html" %}
 
 {% block content %}
-<div class="user-management">
-    <div class="header-group">
-        <h2 class="page-title">创建新用户</h2>
+<div class="content-block">
+    <div class="content-header">
+        <h2>创建新用户</h2>
     </div>
     
     <form method="post" class="user-form">
-        {% csrf_token %}
         
         <div class="form-group">
             <label>用户名：</label>

@@ -27,7 +27,7 @@
             <!-- 子菜单项保持原有结构 -->
             <ul class="submenu">
                 <!-- 每个菜单项必须包含data-type属性 -->
-                <li class="menu-item" data-type="users">
+                <li class="menu-item" data-type="users"data-path="/admin/users">
                     <span class="icon">👥</span>
                     <span class="text">用户管理</span>
                 </li>
@@ -78,9 +78,15 @@ async function loadContent(type) {
     const routeMap = {
         users: '/admin/users',
         knowledge: '/admin/knowledge',
-        settings: '/admin/settings'
+        settings: '/admin/settings',
+        create_user: '/admin/users/create'
     };
     
+    // 添加路径有效性检查
+    if (!routeMap[type]) {
+        console.error('无效的路由类型:', type);
+        return;
+    }
     try {
         const response = await fetch(routeMap[type]);
         document.getElementById('dynamic-content').innerHTML = await response.text();
@@ -88,9 +94,5 @@ async function loadContent(type) {
         console.error('加载失败:', error);
     }
 }
-const routeMap = {
-    users: '/users',
-    knowledge: '/knowledge',
-    settings: '/settings'
-};
+
 </script>

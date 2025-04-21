@@ -8,7 +8,7 @@ from auth.models import Document  # 新增导入Document模型
 router = APIRouter(prefix="", tags=["admin_knowledge"])
 templates = Jinja2Templates(directory="templates")
 
-@router.get("/")
+@router.get("/knowledge")
 async def knowledge_management(request: Request, db: Session = Depends(get_db)):
     if not request.session.get("authenticated") or request.session.get("user_role") != "admin":
         return RedirectResponse(url="/login")
