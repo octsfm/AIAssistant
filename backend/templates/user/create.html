@@ -6,7 +6,8 @@
         <h2>创建新用户</h2>
     </div>
     
-    <form method="post" class="user-form">
+    <form method="post" action="/admin/users/create" class="user-form">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
         
         <div class="form-group">
             <label>用户名：</label>

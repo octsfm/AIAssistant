@@ -27,7 +27,7 @@
             <!-- 子菜单项保持原有结构 -->
             <ul class="submenu">
                 <!-- 每个菜单项必须包含data-type属性 -->
-                <li class="menu-item" data-type="users"data-path="/admin/users">
+                <li class="menu-item" data-type="users">
                     <span class="icon">👥</span>
                     <span class="text">用户管理</span>
                 </li>
@@ -95,4 +95,28 @@ async function loadContent(type) {
     }
 }
 
+
+async function deleteUser(userId) {
+    console.log('[DEBUG] 删除用户...');
+    if (confirm('确定要删除该用户吗？')) {
+        try {
+            const csrfToken = "{{ csrf_token }}"; // 获取CSRF令牌
+            const response = await fetch(`/admin/users/delete/${userId}`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': csrfToken,
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                body: new URLSearchParams({
+                    csrf_token: csrfToken
+                })
+            });
+            if (response.redirected) {
+                window.location.reload();
+            }
+        } catch (error) {
+            console.error('删除失败:', error);
+        }
+    }
+}
 </script>

@@ -1,5 +1,4 @@
 <!DOCTYPE html>
-<html>
 <head>
     <title>用户管理</title>
     <!-- 确保基础样式加载 -->
@@ -75,7 +74,7 @@
                                 <button class="btn btn-icon" title="编辑">
                                     <span class="icon-symbol">✏️</span>
                                 </button>
-                                <button class="btn btn-icon" title="删除">
+                                <button class="btn btn-icon" title="删除" onclick="deleteUser({{ user.id }})">
                                     <span class="icon-symbol">🗑️</span>
                                 </button>
                             </div>
@@ -99,4 +98,3 @@
     </div>
 </div>
 </body>
-</html>
