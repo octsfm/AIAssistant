@@ -16,13 +16,10 @@ app.add_middleware(
 
 # 其他中间件和路由注册保持在后
 app.include_router(auth.router)
-# 修改前
-app.include_router(admin.router) 
-
-# 修改后（保持路由前缀一致性）
-app.include_router(admin.router, prefix="/admin")
+app.include_router(admin.router)
 
 # 在FastAPI实例创建后添加
+# 添加静态文件路由配置
 app.mount("/static", StaticFiles(directory="static"), name="static")
 
 @app.on_event("startup")

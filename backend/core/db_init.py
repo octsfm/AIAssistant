@@ -3,6 +3,7 @@ from sqlalchemy.orm import sessionmaker
 from bcrypt import hashpw, gensalt
 import os
 from sqlalchemy import Table, Column, String
+from auth.models import Document 
 
 # 根据环境变量判断是否在Docker中运行
 db_host = "mgmt-db" if os.getenv('IN_DOCKER') else "localhost"
@@ -44,6 +45,10 @@ def init_db():
             Column('created_at', DateTime)
         )
         metadata.create_all(engine)
+        
+  # 新增documents表创建逻辑
+    if not inspector.has_table("documents"):
+        Document.__table__.create(engine)        
     
     # 初始化账户（包含admin和user）
     with SessionLocal() as session:
@@ -81,3 +86,4 @@ def init_db():
                     }
                 )
         session.commit()
+        

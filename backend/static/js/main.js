@@ -1,3 +1,4 @@
+console.log('[DEBUG] main.js模块已加载');  
 // 登录处理
 async function handleLogin(e) {
     e.preventDefault();
@@ -10,39 +11,26 @@ async function handleLogin(e) {
     if (response.ok) window.location.href = '/';
 }
 
-// 动态内容加载
-async function loadContent(type) {
-    try {
-        const response = await fetch(`/admin/${type}`);
-        const content = await response.text();
-        
-        document.getElementById('dynamic-content').innerHTML = content;
-        
-        // 根据类型初始化功能
-        if(type === 'users') initUserList();
-        if(type === 'knowledge') initUploader();
-    } catch (error) {
-        console.error('加载失败:', error);
-    }
-}
 
-// 初始化用户列表
-async function initUserList() {
-    const response = await fetch('/api/users');
-    const users = await response.json();
+// // 初始化用户列表
+// async function initUserList() {
+//     console.log('[17] 初始化用户列表');
+//     debugger;
+//     const response = await fetch('/api/users');
+//     const users = await response.json();
     
-    const tbody = document.querySelector('#user-table tbody');
-    tbody.innerHTML = users.map(user => `
-        <tr>
-            <td>${user.username}</td>
-            <td>${user.role}</td>
-            <td>
-                <button class="btn edit-btn">编辑</button>
-                <button class="btn delete-btn">删除</button>
-            </td>
-        </tr>
-    `).join('');
-}
+//     const tbody = document.querySelector('#user-table tbody');
+//     tbody.innerHTML = users.map(user => `
+//         <tr>
+//             <td>${user.username}</td>
+//             <td>${user.role}</td>
+//             <td>
+//                 <button class="btn edit-btn">编辑</button>
+//                 <button class="btn delete-btn">删除</button>
+//             </td>
+//         </tr>
+//     `).join('');
+// }
 
 // 初始化上传功能
 function initUploader() {

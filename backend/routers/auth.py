@@ -27,7 +27,7 @@ async def login_action(
     password: str = Form(...),
     db: Session = Depends(get_db)
 ):
-    print(f"Debug - login") 
+    print(f"[auth.py]Debug - login") 
     try:
         result = db.execute(
             text("SELECT * FROM users WHERE username = :username"),

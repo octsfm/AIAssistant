@@ -15,6 +15,12 @@ def admin_required(request: Request):
         raise HTTPException(status_code=403, detail="权限不足")
 
 @router.get("/create", include_in_schema=False)
+async def create_user_modal(request: Request):
+    return templates.TemplateResponse("user/_create_modal.html", {
+        "request": request
+    })
+
+@router.get("/create", include_in_schema=False)
 async def create_user_page(request: Request):
     return templates.TemplateResponse("user/create.html", {"request": request})
 
@@ -62,7 +68,9 @@ async def user_list(
     db: Session = Depends(get_db),
     _: None = Depends(admin_required)
 ):
+    print(f"[user.py][71]user_list") 
     users = db.query(User).order_by(User.created_at.desc()).all()
+    print(f"[user.py][73]user_list") 
     return templates.TemplateResponse("user/list.html", {  # 修改路径
         "request": request,
         "users": users

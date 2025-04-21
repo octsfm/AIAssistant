@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <head>
     <link rel="stylesheet" href="/static/css/base.css">
     <link rel="stylesheet" href="/static/css/modules/admin.css">
@@ -50,6 +51,7 @@
                         document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
                         // 设置当前激活项
                         this.classList.add('active');
+                        console.log('[53] 工具栏点击');
                         loadContent(type);
                     });
                 });
@@ -68,63 +70,27 @@
     </div>
 </div>
 
-
 <script>
-    // 修改前
-    function logout() {
-        fetch('/logout', { method: 'GET' })
-    }
-    
-    // 修改后
-    function logout() {
-        fetch('/logout', { 
-            method: 'POST',
-            credentials: 'include'  // 确保携带cookie
-        }).then(() => window.location.href = '/login')
-    }
-    </script>
-
-
-<script>
-document.addEventListener('DOMContentLoaded', () => {
-    // 统一事件绑定（删除重复的绑定代码）
-    document.querySelector('.submenu').addEventListener('click', (e) => {
-        const menuItem = e.target.closest('.menu-item');
-        if (menuItem && menuItem.dataset.type) {
-            // 清除所有激活状态
-            document.querySelectorAll('.menu-item').forEach(i => i.classList.remove('active'));
-            // 设置当前激活项
-            menuItem.classList.add('active');
-            // 更新标题
-            document.getElementById('current-module').textContent = menuItem.querySelector('.text').textContent;
-            loadContent(menuItem.dataset.type);
-        }
-    });
-});
-
 // 修复函数闭合问题
+// 修改前端加载逻辑
 async function loadContent(type) {
+    // 映射type到实际路由
+    const routeMap = {
+        users: '/admin/users',
+        knowledge: '/admin/knowledge',
+        settings: '/admin/settings'
+    };
+    
     try {
-        const response = await fetch(`/admin/get-content?type=${encodeURIComponent(type)}`);
-        if (!response.ok) throw new Error('加载失败');
+        const response = await fetch(routeMap[type]);
         document.getElementById('dynamic-content').innerHTML = await response.text();
     } catch (error) {
         console.error('加载失败:', error);
     }
-} // 添加缺失的闭合括号
-</script>
-
-<script>
-// 修改前
-function logout() {
-    fetch('/logout', { method: 'GET' })
 }
-
-// 修改后
-function logout() {
-    fetch('/logout', { 
-        method: 'POST',
-        credentials: 'include'  // 确保携带cookie
-    }).then(() => window.location.href = '/login')
-}
+const routeMap = {
+    users: '/users',
+    knowledge: '/knowledge',
+    settings: '/settings'
+};
 </script>
