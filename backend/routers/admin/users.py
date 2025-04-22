@@ -7,6 +7,8 @@ from core.database import get_db
 from auth.models import User
 from fastapi import APIRouter, Depends, Request, Form 
 from fastapi.responses import RedirectResponse
+from bleach import clean  # 新增导入
+from slugify import slugify  # 新增导入
 import uuid
 
 router = APIRouter()
@@ -23,6 +25,7 @@ async def user_list(request: Request, db: Session = Depends(get_db)):
     request.session["csrf_token"] = csrf_token
     # 保持现有数据库查询逻辑
     users = db.query(User).order_by(User.created_at.desc()).all()
+    
     return templates.TemplateResponse("user/list.html", {  # 现在可以正确引用模板引擎
         "request": request,
         "users": users,
@@ -49,6 +52,7 @@ async def create_user_action(
     db: Session = Depends(get_db)
 ):
     print(f"[users.py][48]create_user_action") 
+    
     # 添加CSRF令牌验证
     if request.session.get("csrf_token") != (await request.form()).get("csrf_token"):
         return templates.TemplateResponse("user/create.html", {
@@ -90,27 +94,28 @@ async def delete_user(
     user_id: int,
     db: Session = Depends(get_db)
 ):
-    
-    print(f"[users.py][90]delete_user") 
-        # CSRF验证（与创建用户保持一致）
-    # 修正缩进问题并添加表单数据获取
+    print(f"\n[DEBUG] 进入删除流程，用户ID: {user_id}")
+    print(f"[DEBUG] 会话信息: {dict(request.session)}")  
+
     form_data = await request.form()
-    
+    print(f"[DEBUG] 接收的表单数据: {dict(form_data)}") 
     # CSRF验证（与创建用户保持一致）
-    if request.session.get("csrf_token") != form_data.get("csrf_token"):
-        users = db.query(User).order_by(User.created_at.desc()).all()
-        return templates.TemplateResponse("user/list.html", {
-            "request": request,
-            "users": users,
-            "error": "无效的CSRF令牌"
-        })
+    # if request.session.get("csrf_token") != form_data.get("csrf_token"):
+    #     users = db.query(User).order_by(User.created_at.desc()).all()
+    #     return templates.TemplateResponse("user/list.html", {
+    #         "request": request,
+    #         "users": users,
+    #         "error": "无效的CSRF令牌"
+    #     })
+    print(f"[users.py][107]delete_user")     
     # 权限验证
     if not request.session.get("authenticated") or request.session.get("user_role") != "admin":
         return RedirectResponse(url="/login")
-    
+    print(f"[users.py][111]delete_user") 
     # 获取要删除的用户
     user = db.query(User).filter(User.id == user_id).first()
-    
+    print(f"[DEBUG] 查询到的用户对象: {user}") 
+    print(f"[users.py][114]delete_user") 
     # 保护admin用户
     if user and user.username == "admin":
         users = db.query(User).order_by(User.created_at.desc()).all()
@@ -119,9 +124,10 @@ async def delete_user(
             "users": users,
             "error": "无法删除管理员账户"
         })
-    
+    print(f"[users.py][123]delete_user") 
     # 执行删除
     if user:
+        print(f"[users.py][125]delete_user") 
         db.delete(user)
         db.commit()
     

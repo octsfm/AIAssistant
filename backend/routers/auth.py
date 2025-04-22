@@ -48,8 +48,13 @@ async def login_action(
         # 登录成功后设置session并跳转
         request.session["authenticated"] = True
         request.session["user_role"] = user['role']
-        request.session["user_id"] = user['id']  # 新增用户ID存储
-        return RedirectResponse(url="/admin", status_code=status.HTTP_302_FOUND)
+        request.session["user_id"] = user['id']
+        
+        # 根据用户角色跳转不同页面
+        if user['role'] == 'admin':
+            return RedirectResponse(url="/admin", status_code=status.HTTP_302_FOUND)
+        else:
+            return RedirectResponse(url="/user", status_code=status.HTTP_302_FOUND)
 
     except Exception as e:
         return templates.TemplateResponse("login.html", {
@@ -69,4 +74,7 @@ async def logout(request: Request):
 async def user_dashboard(request: Request):
     if not request.session.get("authenticated"):
         return RedirectResponse(url="/login")
-    return templates.TemplateResponse("user.html", {"request": request})
+    return templates.TemplateResponse("user.html", {
+        "request": request,
+        "user_role": request.session.get("user_role")
+    })

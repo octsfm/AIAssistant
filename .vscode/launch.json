@@ -1,0 +1,20 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "FastAPI Debug",
+            "type": "python",
+            "request": "launch",
+            "module": "uvicorn",
+            "args": [
+                "backend.main:app",  // 确保入口点正确
+                "--reload",
+                "--port", "8000"
+            ],
+            "env": {
+                "PYTHONPATH": "${workspaceFolder}/backend;${env:PYTHONPATH}"  // Windows使用分号分隔
+            },
+            "pythonPath": "${workspaceFolder}/backend/venv/Scripts/python.exe"  // 明确指定虚拟环境路径
+        }
+    ]
+}
