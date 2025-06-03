@@ -1,11 +1,15 @@
-fastapi==0.109.0
-uvicorn==0.27.0
-pydantic==2.7.1 
-python-multipart==0.0.6
-sqlalchemy>=2.0,<3.0  # 保持2.x版本
-# 将psycopg2-binary替换为以下依赖
-psycopg[copm]==3.1.18  # 现代替代方案
-psycopg-binary==3.2.6
-python-jose[cryptography]==3.3.0
-bcrypt==4.1.2
-passlib==1.7.4
+fastapi>=0.109.0
+uvicorn>=0.27.0
+pydantic>=2.7.1
+python-multipart>=0.0.6
+sqlalchemy>=2.0,<3.0
+psycopg2-binary>=2.9.9
+python-jose[cryptography]>=3.3.0
+bcrypt>=4.1.2
+passlib>=1.7.4
+pydantic-core>=2.18.2
+
+# 在已有依赖基础上添加
+markdown==3.6
+python-slugify==8.0.4  # 更规范的包名
+bleach==6.1.0  # 新增输入清理库
